@@ -9,7 +9,7 @@
             "name": "Value Proposition",
             "isMandatory": false,
             "hasOrSubfeature": false,
-            "hasXOrSubfeatures": false,
+            "hasXorSubfeatures": false,
             "isDeletable": false,
             "features": [
                 {
@@ -17,7 +17,7 @@
                     "name": "Money-Back Guarantee",
                     "isMandatory": false,
                     "hasOrSubfeature": false,
-                    "hasXOrSubfeatures": false,
+                    "hasXorSubfeatures": false,
                     "isDeletable": true,
                     "requiringDependencyTo": [
                         17
@@ -32,7 +32,7 @@
                     "name": "Cancel Anytime",
                     "isMandatory": false,
                     "hasOrSubfeature": false,
-                    "hasXOrSubfeatures": false,
+                    "hasXorSubfeatures": false,
                     "isDeletable": true,
                     "requiringDependencyTo": [
                         18
@@ -49,7 +49,7 @@
             "name": "Customer Segments",
             "isMandatory": false,
             "hasOrSubfeature": false,
-            "hasXOrSubfeatures": false,
+            "hasXorSubfeatures": false,
             "isDeletable": false,
             "features": [
                 {
@@ -57,7 +57,7 @@
                     "name": "Flatrate User",
                     "isMandatory": false,
                     "hasOrSubfeature": false,
-                    "hasXOrSubfeatures": false,
+                    "hasXorSubfeatures": false,
                     "isDeletable": true,
                     "requiringDependencyTo": [
                         14
@@ -70,7 +70,7 @@
                     "name": "Movie Lovers",
                     "isMandatory": false,
                     "hasOrSubfeature": false,
-                    "hasXOrSubfeatures": false,
+                    "hasXorSubfeatures": false,
                     "isDeletable": true,
                     "requiringDependencyTo": [
                         15
@@ -85,7 +85,7 @@
             "name": "Customer Relationships",
             "isMandatory": false,
             "hasOrSubfeature": false,
-            "hasXOrSubfeatures": false,
+            "hasXorSubfeatures": false,
             "isDeletable": false,
             "features": [ ]
         },
@@ -94,7 +94,7 @@
             "name": "Customer Channel",
             "isMandatory": false,
             "hasOrSubfeature": false,
-            "hasXOrSubfeatures": false,
+            "hasXorSubfeatures": false,
             "isDeletable": false,
             "features": [
                 {
@@ -102,7 +102,7 @@
                     "name": "TV Advertisement",
                     "isMandatory": false,
                     "hasOrSubfeature": false,
-                    "hasXOrSubfeatures": false,
+                    "hasXorSubfeatures": false,
                     "isDeletable": true,
                     "requiringDependencyFrom": [
                         12
@@ -115,7 +115,7 @@
                     "name": "Cinema Advertisement",
                     "isMandatory": false,
                     "hasOrSubfeature": false,
-                    "hasXOrSubfeatures": false,
+                    "hasXorSubfeatures": false,
                     "isDeletable": true,
                     "requiringDependencyFrom": [
                         13
@@ -130,7 +130,7 @@
             "name": "Key Partners",
             "isMandatory": false,
             "hasOrSubfeature": false,
-            "hasXOrSubfeatures": false,
+            "hasXorSubfeatures": false,
             "isDeletable": false,
             "features": [ ]
         },
@@ -139,7 +139,7 @@
             "name": "Key Activities",
             "isMandatory": false,
             "hasOrSubfeature": false,
-            "hasXOrSubfeatures": false,
+            "hasXorSubfeatures": false,
             "isDeletable": false,
             "features": [ ]
         },
@@ -148,7 +148,7 @@
             "name": "Key Resources",
             "isMandatory": false,
             "hasOrSubfeature": false,
-            "hasXOrSubfeatures": false,
+            "hasXorSubfeatures": false,
             "isDeletable": false,
             "features": [ ]
         },
@@ -157,7 +157,7 @@
             "name": "Revenue Streams",
             "isMandatory": false,
             "hasOrSubfeature": false,
-            "hasXOrSubfeatures": false,
+            "hasXorSubfeatures": false,
             "isDeletable": false,
             "features": [
                 {
@@ -165,7 +165,7 @@
                     "name": "Personalized Advertisements",
                     "isMandatory": false,
                     "hasOrSubfeature": false,
-                    "hasXOrSubfeatures": false,
+                    "hasXorSubfeatures": false,
                     "isDeletable": true,
                     "excludingDependency": [
                         10,
@@ -179,7 +179,7 @@
                     "name": "Single Movie Purchase",
                     "isMandatory": true,
                     "hasOrSubfeature": false,
-                    "hasXOrSubfeatures": false,
+                    "hasXorSubfeatures": false,
                     "isDeletable": true,
                     "requiringDependencyFrom": [
                         10
@@ -193,7 +193,7 @@
                     "name": "Membership",
                     "isMandatory": false,
                     "hasOrSubfeature": false,
-                    "hasXOrSubfeatures": false,
+                    "hasXorSubfeatures": false,
                     "requiringDependencyFrom": [
                         11
                     ],
@@ -209,7 +209,7 @@
             "name": "Cost Structure",
             "isMandatory": false,
             "hasOrSubfeature": false,
-            "hasXOrSubfeatures": false,
+            "hasXorSubfeatures": false,
             "isDeletable": false,
             "features": [ ]
         }

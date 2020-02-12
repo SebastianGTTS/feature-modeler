@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import { PouchdbService } from '../pouchdb.service';
+import { PouchdbService } from '../service/pouchdb.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -13,7 +13,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 })
 /**
  * The FeatureModelDetailComponent shows the feature model and allow the adding/updating/deleting of features and dependencies.
- * 
+ *
  * @author: Sebastian Gottschalk
  */
 export class FeatureModelDetailComponent implements OnInit {
@@ -26,7 +26,7 @@ export class FeatureModelDetailComponent implements OnInit {
   modalReference: NgbModalRef;
   modalDependency: any;
   modalSubfeatureIds: any[];
-  // References to form groups 
+  // References to form groups
   featureModelForm: FormGroup;
   featureForm: FormGroup;
   dependencyForm: FormGroup;
@@ -37,9 +37,9 @@ export class FeatureModelDetailComponent implements OnInit {
   @ViewChild('deleteModal', { 'static': true }) deleteModal: any;
 
   /**
-   * Creates a new instance of the FeatureModelDetailComponent. 
-   * @param fb FormBuilder 
-   * @param route ActivatedRoute 
+   * Creates a new instance of the FeatureModelDetailComponent.
+   * @param fb FormBuilder
+   * @param route ActivatedRoute
    * @param location Location
    * @param pouchDBServer PouchdbService
    * @param modalService NgbModal
@@ -84,7 +84,7 @@ export class FeatureModelDetailComponent implements OnInit {
     this.pouchDBServer.getFeatureWithParent(this.featureModelId, featureId).then(result => {
       this.modalFeature = result;
       this.modalSubfeatureIds = this.pouchDBServer.listSubfeatureIdsHelper(this.modalFeature.features);
-      this.modalFeatureForm = this.fb.group({ name: [this.modalFeature.name, Validators.required], isMandatory: this.modalFeature.isMandatory, hasOrSubfeatures: this.modalFeature.hasOrSubfeatures, hasXOrSubfeatures: this.modalFeature.hasXOrSubfeatures, subfeatureOf: this.modalFeature.parentId });
+      this.modalFeatureForm = this.fb.group({ name: [this.modalFeature.name, Validators.required], isMandatory: this.modalFeature.isMandatory, hasOrSubfeatures: this.modalFeature.hasOrSubfeatures, hasXorSubfeatures: this.modalFeature.hasXorSubfeatures, subfeatureOf: this.modalFeature.parentId });
       this.modalReference = this.modalService.open(this.updateModal, { size: 'lg' });
     }, error => {
       console.log("UpdateFeatureModal: " + error);
@@ -140,7 +140,7 @@ export class FeatureModelDetailComponent implements OnInit {
    * Update the current feature.
    */
   updateFeature() {
-    this.pouchDBServer.updateFeature(this.featureModelId, this.modalFeature.id, this.modalFeatureForm.value.name, this.modalFeatureForm.value.isMandatory, this.modalFeatureForm.value.hasOrSubfeatures, this.modalFeatureForm.value.hasXOrSubfeatures, this.modalFeatureForm.value.subfeatureOf).then(result => {
+    this.pouchDBServer.updateFeature(this.featureModelId, this.modalFeature.id, this.modalFeatureForm.value.name, this.modalFeatureForm.value.isMandatory, this.modalFeatureForm.value.hasOrSubfeatures, this.modalFeatureForm.value.hasXorSubfeatures, this.modalFeatureForm.value.subfeatureOf).then(result => {
       this.closeModal();
     }, error => {
       console.log("UpdateFeature: " + error);
@@ -164,7 +164,7 @@ export class FeatureModelDetailComponent implements OnInit {
    */
   private loadForms() {
     this.featureModelForm = this.fb.group({ name: ['', Validators.required], description: [''] });
-    this.featureForm = this.fb.group({ featureName: ['', Validators.required], isMandatory: false, hasOrSubfeatures: false, hasXOrSubfeatures: false, subfeatureOf: ["1"] });
+    this.featureForm = this.fb.group({ featureName: ['', Validators.required], isMandatory: false, hasOrSubfeatures: false, hasXorSubfeatures: false, subfeatureOf: ["1"] });
     this.dependencyForm = this.fb.group({ dependencyType: 'requiringDependencyTo', fromFeatureId: ["1"], toFeatureId: ["2"] })
   }
 
@@ -186,7 +186,7 @@ export class FeatureModelDetailComponent implements OnInit {
    * Insert a new feature.
    */
   insertFeature(): void {
-    this.pouchDBServer.addFeature(this.featureModelId, this.featureForm.value.featureName, this.featureForm.value.isMandatory, this.featureForm.value.hasOrSubfeatures, this.featureForm.value.hasXOrSubfeatures, this.featureForm.value.subfeatureOf).then(result => {
+    this.pouchDBServer.addFeature(this.featureModelId, this.featureForm.value.featureName, this.featureForm.value.isMandatory, this.featureForm.value.hasOrSubfeatures, this.featureForm.value.hasXorSubfeatures, this.featureForm.value.subfeatureOf).then(result => {
       this.loadForms();
       this.loadFeatureModel(this.featureModelId);
     }, error => {
@@ -240,14 +240,14 @@ export class FeatureModelDetailComponent implements OnInit {
     for (var i = 0; i < this.featureModel.features.length; i++) {
       var model = this.featureModel.features[this.featureModel.features.length - 1 - i]
       model.level = 1;
-      featureStack.push(model); 
+      featureStack.push(model);
     }
 
     // Select single feature from the stack
     while (featureStack.length > 0) {
       var f = featureStack.pop();
       featureList.push({ id: f.id, name: f.name, levelname: "-".repeat(f.level) + " " + f.name, level: f.level });
-      
+
       // Add new features to the stack
       if (f.features) {
         for (var i = 0; i < f.features.length; i++) {

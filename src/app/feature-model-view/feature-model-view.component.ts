@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PouchdbService } from '../pouchdb.service';
+import { PouchdbService } from '../service/pouchdb.service';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({

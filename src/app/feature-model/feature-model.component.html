@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <div class="my-3 p-3 bg-white rounded shadow-sm">
+  <!-- <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h6 class="border-bottom border-gray pb-2 mb-0">Short introduction</h6>
     <div class="text-muted pt-3">
       <p>The BMDL Feature Modeler is a tool to describe Business Models through a combination of the Business Model
@@ -34,11 +34,16 @@
         View Full Tool Explanation
       </button>
     </div>
-  </div>
+  </div> -->
 
   <!-- List Feature Models -->
   <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h6 class="border-bottom border-gray pb-2 mb-0">List of Feature Models</h6>
+
+    <div *ngIf="featureModelList?.length === 0" class="my-3 text-muted">
+      No feature models in the database.
+    </div>
+
     <div *ngFor="let fm of featureModelList" class="media text-muted pt-3">
       <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg"
            preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32">
@@ -52,7 +57,7 @@
           <strong (click)="viewFeatureModel(fm._id)" class="text-gray-dark">{{fm.name}}</strong>
           <span>
             <button (click)="saveFeatureModel(fm._id)" type="button" class="btn btn-success btn-xs">Save</button> &nbsp;
-            <button (click)="viewFeatureModel(fm._id)" type="button" class="btn btn-dark btn-xs">View</button> &nbsp;
+            <!-- <button (click)="viewFeatureModel(fm._id)" type="button" class="btn btn-dark btn-xs">View</button> &nbsp; -->
             <button (click)="editFeatureModel(fm._id)" type="button" class="btn btn-warning btn-xs">Edit</button> &nbsp;
             <button (click)="deleteFeatureModel(fm._id)" type="button" class="btn btn-danger btn-xs">Delete</button>
           </span>

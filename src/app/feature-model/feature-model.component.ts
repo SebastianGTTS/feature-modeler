@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { saveAs } from 'file-saver';
 
-import { PouchdbService } from '../pouchdb.service';
+import { PouchdbService } from '../service/pouchdb.service';
 
 @Component({
   selector: 'app-feature-model',

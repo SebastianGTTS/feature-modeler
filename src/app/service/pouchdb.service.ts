@@ -15,8 +15,8 @@ import PouchDBFind from 'pouchdb-find';
 export class PouchdbService {
   db: PouchDB.Database;
 
-  // Use "http://localhost:4200/database" for connecting to a CouchDB specified in the proxy.conf.json
-  databaseName = "arpc-feature-modeler"
+  // Use 'http://localhost:4200/database' for connecting to a CouchDB specified in the proxy.conf.json
+  databaseName = 'arpc-feature-modeler'
 
   /**
    * Create a new instance of the PouchdbService.
@@ -30,7 +30,7 @@ export class PouchdbService {
 
     // Check database connection
     this.db.info().then(function (info) {
-      console.log("Database connection: " + JSON.stringify(info));
+      console.log('Database connection: ' + JSON.stringify(info));
     })
   }
 
@@ -71,10 +71,10 @@ export class PouchdbService {
       description: description,
       featureIdCounter: 10,
       features: [
-        this.createFeatureByParameter(1, "Kitchen")
+        this.createFeatureByParameter(1, 'Kitchen')
       ],
       featureMap: {
-        "1": "Kitchen"
+        '1': 'Kitchen'
       }
     }
 
@@ -85,10 +85,9 @@ export class PouchdbService {
    * Remove the current feature model.
    * @param id id of the current feature model
    */
-  deleteFeatureModel(id: string) {
-    return this.db.get(id).then(result => {
-      return this.db.remove(result);
-    })
+  async deleteFeatureModel(id: string) {
+    const result = await this.db.get(id);
+    return this.db.remove(result);
   }
 
   /**
@@ -97,12 +96,11 @@ export class PouchdbService {
    * @param name name of the current feature model
    * @param description description of the current feature model
    */
-  updateFeatureModel(id: string, name: string, description: string) {
-    return this.db.get(id).then(result => {
-      result['name'] = name;
-      result['description'] = description;
-      return this.db.put(result);
-    });
+  async updateFeatureModel(id: string, name: string, description: string) {
+    const result = await this.db.get(id);
+    result['name'] = name;
+    result['description'] = description;
+    return this.db.put(result);
   }
 
   /**
@@ -125,8 +123,7 @@ export class PouchdbService {
       result = this.dependencyModificationHelper(result, dependencyType, fromFeatureId, toFeatureId, insertDependency);
 
       return this.db.put(result);
-
-    })
+    });
   }
 
   /**
@@ -165,16 +162,16 @@ export class PouchdbService {
     var featureModel = featureModel;
 
     if (dependencyType == 'requiringDependencyTo') {
-      featureModel = this.updateFeatureHandler(featureModel, toFeatureId, modificationFunction.bind(null, "requiringDependencyFrom", fromFeatureId))
+      featureModel = this.updateFeatureHandler(featureModel, toFeatureId, modificationFunction.bind(null, 'requiringDependencyFrom', fromFeatureId))
       //console.log(JSON.stringify(result))
-      featureModel = this.updateFeatureHandler(featureModel, fromFeatureId, modificationFunction.bind(null, "requiringDependencyTo", toFeatureId));
+      featureModel = this.updateFeatureHandler(featureModel, fromFeatureId, modificationFunction.bind(null, 'requiringDependencyTo', toFeatureId));
       //console.log(JSON.stringify(result))
     } else if (dependencyType == 'requiringDependencyFrom') {
-      featureModel = this.updateFeatureHandler(featureModel, toFeatureId, modificationFunction.bind(null, "requiringDependencyTo", fromFeatureId));
-      featureModel = this.updateFeatureHandler(featureModel, fromFeatureId, modificationFunction.bind(null, "requiringDependencyFrom", toFeatureId));
+      featureModel = this.updateFeatureHandler(featureModel, toFeatureId, modificationFunction.bind(null, 'requiringDependencyTo', fromFeatureId));
+      featureModel = this.updateFeatureHandler(featureModel, fromFeatureId, modificationFunction.bind(null, 'requiringDependencyFrom', toFeatureId));
     } else {
-      featureModel = this.updateFeatureHandler(featureModel, toFeatureId, modificationFunction.bind(null, "excludingDependency", fromFeatureId));
-      featureModel = this.updateFeatureHandler(featureModel, fromFeatureId, modificationFunction.bind(null, "excludingDependency", toFeatureId));
+      featureModel = this.updateFeatureHandler(featureModel, toFeatureId, modificationFunction.bind(null, 'excludingDependency', fromFeatureId));
+      featureModel = this.updateFeatureHandler(featureModel, fromFeatureId, modificationFunction.bind(null, 'excludingDependency', toFeatureId));
     }
 
     return featureModel;
@@ -243,8 +240,7 @@ export class PouchdbService {
       result = this.deleteFeatureAndDependeciesHelper(result, featureIdList, featureId);
 
       return this.db.put(result);
-    })
-
+    });
   }
 
   /**
@@ -293,13 +289,11 @@ export class PouchdbService {
             f.features.splice(featureIndex, 1);
             featureFound = false;
           }
-
         }
       }
     }
 
     return result;
-
   }
 
   /**
@@ -333,9 +327,7 @@ export class PouchdbService {
     }
 
     return featureIdList;
-
   }
-
 
   /**
    * Update the current feature.
@@ -344,10 +336,10 @@ export class PouchdbService {
    * @param featureName name of the current feature
    * @param isMandatory is the current feature mandatory
    * @param hasOrSubfeatures has the current feature or subfeatures
-   * @param hasXOrSubfeatures has the current feature xor subfeatures
+   * @param hasXorSubfeatures has the current feature xor subfeatures
    * @param subfeatureOf is a subfeature of
    */
-  updateFeature(featureModelId: string, featureId: number, featureName: string, isMandatory: boolean, hasOrSubfeatures: boolean, hasXOrSubfeatures: boolean, subfeatureOf: number) {
+  updateFeature(featureModelId: string, featureId: number, featureName: string, isMandatory: boolean, hasOrSubfeatures: boolean, hasXorSubfeatures: boolean, subfeatureOf: number) {
     return this.db.get(featureModelId).then(result => {
       var result = result;
       var parentResult = this.getFeatureWithParentFromModel(result, featureId.toString());
@@ -358,7 +350,7 @@ export class PouchdbService {
         name: featureName,
         isMandatory: this.getBoolean(isMandatory),
         hasOrSubfeatures: this.getBoolean(hasOrSubfeatures),
-        hasXOrSubfeatures: this.getBoolean(hasXOrSubfeatures),
+        hasXorSubfeatures: this.getBoolean(hasXorSubfeatures),
         isDeletable: parentResult.isDeletable,
         features: parentResult.features,
         requiringDependencyFrom: parentResult.requiringDependencyFrom,
@@ -372,7 +364,7 @@ export class PouchdbService {
         result.name = featureName;
         result.isMandatory = this.getBoolean(isMandatory);
         result.hasOrSubfeatures = this.getBoolean(hasOrSubfeatures);
-        result.hasXOrSubfeatures = this.getBoolean(hasXOrSubfeatures);
+        result.hasXorSubfeatures = this.getBoolean(hasXorSubfeatures);
 
         return result;
       };
@@ -402,9 +394,7 @@ export class PouchdbService {
       }
 
       return this.db.put(result);
-
     });
-
   }
 
   /**
@@ -413,14 +403,14 @@ export class PouchdbService {
    * @param featureName name of the feature
    * @param isMandatory is the feature mandatory
    * @param hasOrSubfeatures has the feature or subfeatures
-   * @param hasXOrSubfeatures has the feature xor subfeatures
+   * @param hasXorSubfeatures has the feature xor subfeatures
    * @param subfeatureOf is subfeature of
    */
-  addFeature(featureModelId: string, featureName: string, isMandatory: boolean, hasOrSubfeatures: boolean, hasXOrSubfeatures: boolean, subfeatureOf: number) {
+  addFeature(featureModelId: string, featureName: string, isMandatory: boolean, hasOrSubfeatures: boolean, hasXorSubfeatures: boolean, subfeatureOf: number) {
     return this.db.get(featureModelId).then(result => {
       var result = result;
 
-      var feature = this.createFeatureByParameter(result['featureIdCounter'], featureName, isMandatory, hasOrSubfeatures, hasXOrSubfeatures, true);
+      var feature = this.createFeatureByParameter(result['featureIdCounter'], featureName, isMandatory, hasOrSubfeatures, hasXorSubfeatures, true);
 
       // Generich function to insert feature
       var insertFeature = (result: any): any => {
@@ -434,7 +424,6 @@ export class PouchdbService {
       result['featureMap'][feature.id] = feature.name;
 
       return this.db.put(result);
-
     });
   }
 
@@ -474,7 +463,6 @@ export class PouchdbService {
     }
 
     return result;
-
   }
 
   /**
@@ -484,11 +472,11 @@ export class PouchdbService {
   private getBoolean(value: any): boolean {
     switch (value) {
       case true:
-      case "true":
+      case 'true':
       case 1:
-      case "1":
-      case "on":
-      case "yes":
+      case '1':
+      case 'on':
+      case 'yes':
         return true;
       default:
         return false;
@@ -515,22 +503,22 @@ export class PouchdbService {
     hasOrSubfeatures: boolean = false,
     hasXOrSubfature: boolean = false,
     isDeletetable: boolean = false,
-    requiringDependencyFrom: any[] = [],
-    requiringDependencyTo: any[] = [],
-    excludingDependency: any[] = [],
+    requiringDependencyFrom: number[] = [],
+    requiringDependencyTo: number[] = [],
+    excludingDependency: number[] = [],
     features: any[] = []
   ) {
     return {
-      "id": id,
-      "name": name,
-      "isMandatory": this.getBoolean(isMandatory),
-      "hasOrSubfeatures": this.getBoolean(hasOrSubfeatures),
-      "hasXOrSubfeatures": this.getBoolean(hasXOrSubfature),
-      "isDeletable": this.getBoolean(isDeletetable),
-      "requiringDependencyFrom": requiringDependencyFrom,
-      "requiringDependencyTo": requiringDependencyTo,
-      "excludingDependency": excludingDependency,
-      "features": features
+      'id': id,
+      'name': name,
+      'isMandatory': this.getBoolean(isMandatory),
+      'hasOrSubfeatures': this.getBoolean(hasOrSubfeatures),
+      'hasXorSubfeatures': this.getBoolean(hasXOrSubfature),
+      'isDeletable': this.getBoolean(isDeletetable),
+      'requiringDependencyFrom': requiringDependencyFrom,
+      'requiringDependencyTo': requiringDependencyTo,
+      'excludingDependency': excludingDependency,
+      'features': features
     };
   }
 
@@ -539,7 +527,7 @@ export class PouchdbService {
    */
   public async resetDatabase() {
     try {
-      const result = await this.db.destroy();
+      await this.db.destroy();
       this.db = new PouchDB(this.databaseName);
       return this.db.bulkDocs([]);
     }
