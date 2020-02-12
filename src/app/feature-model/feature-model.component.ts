@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { PouchdbService } from '../pouchdb.service';
 import { Router } from '@angular/router';
+
+import { saveAs } from 'file-saver';
+
+import { PouchdbService } from '../pouchdb.service';
 
 @Component({
   selector: 'app-feature-model',
@@ -10,7 +13,7 @@ import { Router } from '@angular/router';
 })
 /**
  * The FeatureModelComponent shows a starting page where all existing feature models can be discovered and new feature models can be created.
- * 
+ *
  * @author: Sebastian Gottschalk
  */
 export class FeatureModelComponent {
@@ -69,7 +72,6 @@ export class FeatureModelComponent {
     })
   }
 
-
   /**
    * Navigate to a component to view the current feature model.
    * @param featureModelId id of the current feature model
@@ -95,6 +97,21 @@ export class FeatureModelComponent {
       this.refreshFeatureModelList();
     }, error => {
       console.log("DeleteFeatureModel: " + error);
+    });
+  }
+
+  /**
+   * Save feature model to disk
+   * @param featureModelId id of the feature model
+   */
+  saveFeatureModel(featureModelId: string): void {
+    this.pouchDBServer.getFeatureModel(featureModelId).then(result => {
+      let model = result as any;
+      let saveName = model.name.replace(/\s+/g, '_').toLowerCase() + '.json';
+      let blob = new Blob([JSON.stringify(model, null, 2)], { type: 'text/json;charset=utf-8' });
+      saveAs(blob, saveName);
+    }, error => {
+      console.log("SaveFeatureModel: " + error);
     });
   }
 
