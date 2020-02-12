@@ -12,7 +12,6 @@ import { FeatureTreeComponent } from './feature-tree/feature-tree.component';
 import { AppBootstrapModule } from './app-bootstrap.module';
 import { FeatureModelViewComponent } from './feature-model-view/feature-model-view.component';
 import { FeatureBuildingBlockComponent } from './feature-building-block/feature-building-block.component';
-import { BusinessModelViewComponent } from './business-model-view/business-model-view.component';
 import { CanvasBuildingBlockComponent } from './canvas-building-block/canvas-building-block.component';
 import { ToolExplanationComponent } from './tool-explanation/tool-explanation.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -25,7 +24,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FeatureTreeComponent,
     FeatureBuildingBlockComponent,
     FeatureModelViewComponent,
-    BusinessModelViewComponent,
     CanvasBuildingBlockComponent,
     ToolExplanationComponent,
   ],

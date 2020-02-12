@@ -10,7 +10,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 /**
  * The FeatureModelViewComponent shows the feature model mapped to the building blocks of the canvas.
- * 
+ *
  * @author: Sebastian Gottschalk
  */
 export class FeatureModelViewComponent implements OnInit {
@@ -47,13 +47,13 @@ export class FeatureModelViewComponent implements OnInit {
    * Add a new business model.
    */
   addBusinessModel() {
-    this.pouchDBServer.addBusinessModel(this.featureModelId, this.businessModelForm.value.name).then(result => {
-      this.businessModelForm.reset();
-      this.loadFeatureModel(this.featureModelId);
-    },
-      error => {
-        console.log("AddBusinessModel: " + error);
-      })
+    // this.pouchDBServer.addBusinessModel(this.featureModelId, this.businessModelForm.value.name).then(result => {
+    //   this.businessModelForm.reset();
+    //   this.loadFeatureModel(this.featureModelId);
+    // },
+    //   error => {
+    //     console.log("AddBusinessModel: " + error);
+    //   })
   }
 
   /**
@@ -61,7 +61,7 @@ export class FeatureModelViewComponent implements OnInit {
    * @param businessModelId id of the business model
    */
   viewBusinessModel(businessModelId: string): void {
-    this.router.navigate(['/businessmodelview', this.featureModelId, businessModelId]);
+    // this.router.navigate(['/businessmodelview', this.featureModelId, businessModelId]);
   }
 
   /**
@@ -69,11 +69,11 @@ export class FeatureModelViewComponent implements OnInit {
    * @param businessModelId id of the business model
    */
   deleteBusinessModel(businessModelId: string): void {
-    this.pouchDBServer.deleteBusinessModel(this.featureModelId, parseInt(businessModelId)).then(result => {
-      this.loadFeatureModel(this.featureModelId);
-    }, error => {
-      console.log("DeleteBusinessModel: " + error);
-    });
+    // this.pouchDBServer.deleteBusinessModel(this.featureModelId, parseInt(businessModelId)).then(result => {
+    //   this.loadFeatureModel(this.featureModelId);
+    // }, error => {
+    //   console.log("DeleteBusinessModel: " + error);
+    // });
   }
 
   /**
@@ -85,10 +85,10 @@ export class FeatureModelViewComponent implements OnInit {
       this.featureModel = result;
       this.businessModelList = [];
 
-      // Load business models
-      for (var model in this.featureModel.businessModelMap) {
-        this.businessModelList.push({ 'id': model, name: this.featureModel.businessModelMap[model] })
-      }
+      // // Load business models
+      // for (var model in this.featureModel.businessModelMap) {
+      //   this.businessModelList.push({ 'id': model, name: this.featureModel.businessModelMap[model] })
+      // }
     }, error => {
       console.log("LoadFeatureModel: " + error);
     })

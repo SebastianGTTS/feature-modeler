@@ -36,7 +36,7 @@ export class FeatureModelComponent {
     // Init default database
     this.pouchDBServer.getDatabaseInfo().then(result => {
       if (result.doc_count === 0) {
-        this.pouchDBServer.addDefaultData().then(result => {
+        this.pouchDBServer.resetDatabase().then(result => {
           this.refreshFeatureModelList();
         }, error => {
           console.log("Default Constructor (inner): " + error);
@@ -65,7 +65,7 @@ export class FeatureModelComponent {
    */
   resetDatabase(): void {
     console.log("Delete Database")
-    this.pouchDBServer.addDefaultData().then(result => {
+    this.pouchDBServer.resetDatabase().then(result => {
       this.refreshFeatureModelList();
     }, error => {
       console.log("Default Constructor (inner): " + error);
