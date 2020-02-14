@@ -338,8 +338,18 @@ export class PouchdbService {
    * @param hasOrSubfeatures has the current feature or subfeatures
    * @param hasXorSubfeatures has the current feature xor subfeatures
    * @param subfeatureOf is a subfeature of
+   * @param isPhysical is a physical object
    */
-  updateFeature(featureModelId: string, featureId: number, featureName: string, isMandatory: boolean, hasOrSubfeatures: boolean, hasXorSubfeatures: boolean, subfeatureOf: number) {
+  updateFeature(
+    featureModelId: string,
+    featureId: number,
+    featureName: string,
+    isMandatory: boolean,
+    hasOrSubfeatures: boolean,
+    hasXorSubfeatures: boolean,
+    subfeatureOf: number,
+    isPhysical: boolean
+  ) {
     return this.db.get(featureModelId).then(result => {
       var result = result;
       var parentResult = this.getFeatureWithParentFromModel(result, featureId.toString());
@@ -352,6 +362,7 @@ export class PouchdbService {
         hasOrSubfeatures: this.getBoolean(hasOrSubfeatures),
         hasXorSubfeatures: this.getBoolean(hasXorSubfeatures),
         isDeletable: parentResult.isDeletable,
+        isPhysical: this.getBoolean(isPhysical),
         features: parentResult.features,
         requiringDependencyFrom: parentResult.requiringDependencyFrom,
         requiringDependencyTo: parentResult.requiringDependencyTo,
@@ -365,6 +376,7 @@ export class PouchdbService {
         result.isMandatory = this.getBoolean(isMandatory);
         result.hasOrSubfeatures = this.getBoolean(hasOrSubfeatures);
         result.hasXorSubfeatures = this.getBoolean(hasXorSubfeatures);
+        result.isPhysical = this.getBoolean(isPhysical);
 
         return result;
       };
@@ -405,12 +417,29 @@ export class PouchdbService {
    * @param hasOrSubfeatures has the feature or subfeatures
    * @param hasXorSubfeatures has the feature xor subfeatures
    * @param subfeatureOf is subfeature of
+   * @param isPhysical is a physical object
    */
-  addFeature(featureModelId: string, featureName: string, isMandatory: boolean, hasOrSubfeatures: boolean, hasXorSubfeatures: boolean, subfeatureOf: number) {
+  addFeature(
+    featureModelId: string,
+    featureName: string,
+    isMandatory: boolean,
+    hasOrSubfeatures: boolean,
+    hasXorSubfeatures: boolean,
+    subfeatureOf: number,
+    isPhysical: boolean
+  ) {
     return this.db.get(featureModelId).then(result => {
       var result = result;
 
-      var feature = this.createFeatureByParameter(result['featureIdCounter'], featureName, isMandatory, hasOrSubfeatures, hasXorSubfeatures, true);
+      var feature = this.createFeatureByParameter(
+        result['featureIdCounter'],
+        featureName,
+        isMandatory,
+        hasOrSubfeatures,
+        hasXorSubfeatures,
+        true,
+        isPhysical
+      );
 
       // Generich function to insert feature
       var insertFeature = (result: any): any => {
@@ -491,6 +520,7 @@ export class PouchdbService {
    * @param hasOrSubfeatures has the feature or subfeatures
    * @param hasXOrSubfature has the feature xor subfeature
    * @param isDeletetable is the feature deletable
+   * @param isPhysical does the feature represent a physical object
    * @param requiringDependencyFrom requiring to dependencies of the feature
    * @param requiringDependencyTo requiring to dependencies of the feature
    * @param excludingDependency excluding dependencies of the feature
@@ -503,6 +533,7 @@ export class PouchdbService {
     hasOrSubfeatures: boolean = false,
     hasXOrSubfature: boolean = false,
     isDeletetable: boolean = false,
+    isPhysical: boolean = false,
     requiringDependencyFrom: number[] = [],
     requiringDependencyTo: number[] = [],
     excludingDependency: number[] = [],
@@ -515,6 +546,7 @@ export class PouchdbService {
       'hasOrSubfeatures': this.getBoolean(hasOrSubfeatures),
       'hasXorSubfeatures': this.getBoolean(hasXOrSubfature),
       'isDeletable': this.getBoolean(isDeletetable),
+      'isPhysical': this.getBoolean(isPhysical),
       'requiringDependencyFrom': requiringDependencyFrom,
       'requiringDependencyTo': requiringDependencyTo,
       'excludingDependency': excludingDependency,
