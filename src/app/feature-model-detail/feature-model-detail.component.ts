@@ -2,9 +2,9 @@ import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
+import { Metadata } from '../models/metadata';
 import { PouchdbService } from '../service/pouchdb.service';
 
 
@@ -33,10 +33,12 @@ export class FeatureModelDetailComponent implements OnInit {
   featureForm: FormGroup;
   dependencyForm: FormGroup;
   modalFeatureForm: FormGroup;
+  metadataForm: FormGroup;
   // References for modal children
   @ViewChild('dependencyModal', { 'static': true }) dependencyModal: any;
   @ViewChild('updateModal', { 'static': true }) updateModal: any;
   @ViewChild('deleteModal', { 'static': true }) deleteModal: any;
+  @ViewChild('metadataModal', { 'static': true }) metadataModal: any;
 
   /**
    * Creates a new instance of the FeatureModelDetailComponent.
@@ -111,6 +113,25 @@ export class FeatureModelDetailComponent implements OnInit {
     });
   }
 
+  async openMetadataModal(featureId) {
+    try {
+      this.modalFeature = await this.pouchDBServer.getFeatureWithParent(this.featureModelId, featureId);
+      this.modalSubfeatureIds = this.pouchDBServer.listSubfeatureIdsHelper(this.modalFeature.features);
+
+      let metadata = new Metadata(this.modalFeature.metadata);
+      this.metadataForm = this.fb.group({
+        modelFilename: [metadata.modelFilename, Validators.required],
+        brand: [metadata.brand],
+        price: [metadata.price, Validators.min(0)],
+        leftSlot: [metadata.leftSlot],
+        rightSlot: [metadata.rightSlot]
+      });
+      this.modalReference = this.modalService.open(this.metadataModal, { size: 'lg' });
+    } catch (error) {
+      console.log('openMetadataModal:', error);
+    }
+  }
+
   /**
    * Closes the current modal.
    */
@@ -173,6 +194,11 @@ export class FeatureModelDetailComponent implements OnInit {
     }, error => {
       console.log("DeleteFeature: " + error);
     });
+  }
+
+  async updateMetadata() {
+    await this.pouchDBServer.updateMetadata(this.featureModelId, this.modalFeature.id, new Metadata(this.metadataForm.value));
+    this.closeModal();
   }
 
   /**
@@ -286,7 +312,13 @@ export class FeatureModelDetailComponent implements OnInit {
     // Select single feature from the stack
     while (featureStack.length > 0) {
       var f = featureStack.pop();
-      featureList.push({ id: f.id, name: f.name, levelname: "-".repeat(f.level) + " " + f.name, level: f.level });
+      featureList.push({
+        id: f.id,
+        name: f.name,
+        levelname: "-".repeat(f.level) + " " + f.name,
+        level: f.level,
+        physical: f.isPhysical
+      });
 
       // Add new features to the stack
       if (f.features) {

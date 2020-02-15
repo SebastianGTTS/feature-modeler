@@ -1,0 +1,8 @@
+.hover-line {
+  transition: background-color 250ms linear;
+  border-radius: 5px;
+}
+
+.hover-line:hover {
+  background-color: #deebf7;
+}

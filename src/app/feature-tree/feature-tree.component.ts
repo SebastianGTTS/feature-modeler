@@ -7,7 +7,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 /**
  * Internal class to display single features of the feature tree.
- * 
+ *
  * @author Sebastian Gottschalk
  */
 export class FeatureTreeComponent {
@@ -15,6 +15,7 @@ export class FeatureTreeComponent {
   @Output() openDependenciesEmitter = new EventEmitter();
   @Output() updateFeatureEmitter = new EventEmitter();
   @Output() deleteFeatureEmitter = new EventEmitter();
+  @Output() editMetadataEmitter = new EventEmitter();
 
   /**
    * Emit Event to open dependencies of current feature.
@@ -62,6 +63,14 @@ export class FeatureTreeComponent {
    */
   deleteFeatureForwardEmitter(featureId:any){
     this.deleteFeature(featureId)
+  }
+
+  editMetadata(featureId: any) {
+    this.editMetadataEmitter.emit(featureId);
+  }
+
+  editMetadataForwardEmitter(featureId: any) {
+    this.editMetadata(featureId);
   }
 
 }

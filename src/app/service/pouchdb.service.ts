@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb-browser';
 import PouchDBFind from 'pouchdb-find';
 
+import { Metadata } from '../models/metadata';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -552,6 +554,19 @@ export class PouchdbService {
       'excludingDependency': excludingDependency,
       'features': features
     };
+  }
+
+  async updateMetadata(featureModelId: string, featureId: number, metadata: Metadata) {
+    console.log(metadata)
+    const metadataUpdater = (feature: any) => {
+      feature.metadata = metadata;
+      return feature;
+    };
+
+    const featureModel = await this.getFeatureModel(featureModelId);
+    this.updateFeatureHandler(featureModel, featureId, metadataUpdater);
+
+    return this.db.put(featureModel);
   }
 
   /**
