@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb-browser';
 import PouchDBFind from 'pouchdb-find';
 
+import { Material } from '../models/Material';
 import { Metadata } from '../models/metadata';
 
 @Injectable({
@@ -341,6 +342,7 @@ export class PouchdbService {
    * @param hasXorSubfeatures has the current feature xor subfeatures
    * @param subfeatureOf is a subfeature of
    * @param isPhysical is a physical object
+   * @param isMaterial is a material to applied to other objects
    */
   updateFeature(
     featureModelId: string,
@@ -350,7 +352,8 @@ export class PouchdbService {
     hasOrSubfeatures: boolean,
     hasXorSubfeatures: boolean,
     subfeatureOf: number,
-    isPhysical: boolean
+    isPhysical: boolean,
+    isMaterial: boolean
   ) {
     return this.db.get(featureModelId).then(result => {
       var result = result;
@@ -365,6 +368,7 @@ export class PouchdbService {
         hasXorSubfeatures: this.getBoolean(hasXorSubfeatures),
         isDeletable: parentResult.isDeletable,
         isPhysical: this.getBoolean(isPhysical),
+        isMaterial: this.getBoolean(isMaterial),
         features: parentResult.features,
         requiringDependencyFrom: parentResult.requiringDependencyFrom,
         requiringDependencyTo: parentResult.requiringDependencyTo,
@@ -379,6 +383,7 @@ export class PouchdbService {
         result.hasOrSubfeatures = this.getBoolean(hasOrSubfeatures);
         result.hasXorSubfeatures = this.getBoolean(hasXorSubfeatures);
         result.isPhysical = this.getBoolean(isPhysical);
+        result.isMaterial = this.getBoolean(isMaterial);
 
         return result;
       };
@@ -420,6 +425,7 @@ export class PouchdbService {
    * @param hasXorSubfeatures has the feature xor subfeatures
    * @param subfeatureOf is subfeature of
    * @param isPhysical is a physical object
+   * @param isMaterial is a material to be applied to other objects
    */
   addFeature(
     featureModelId: string,
@@ -428,7 +434,8 @@ export class PouchdbService {
     hasOrSubfeatures: boolean,
     hasXorSubfeatures: boolean,
     subfeatureOf: number,
-    isPhysical: boolean
+    isPhysical: boolean,
+    isMaterial: boolean
   ) {
     return this.db.get(featureModelId).then(result => {
       var result = result;
@@ -440,7 +447,8 @@ export class PouchdbService {
         hasOrSubfeatures,
         hasXorSubfeatures,
         true,
-        isPhysical
+        isPhysical,
+        isMaterial
       );
 
       // Generich function to insert feature
@@ -523,6 +531,7 @@ export class PouchdbService {
    * @param hasXOrSubfature has the feature xor subfeature
    * @param isDeletetable is the feature deletable
    * @param isPhysical does the feature represent a physical object
+   * @param isMaterial does the feature represent a material
    * @param requiringDependencyFrom requiring to dependencies of the feature
    * @param requiringDependencyTo requiring to dependencies of the feature
    * @param excludingDependency excluding dependencies of the feature
@@ -536,6 +545,7 @@ export class PouchdbService {
     hasXOrSubfature: boolean = false,
     isDeletetable: boolean = false,
     isPhysical: boolean = false,
+    isMaterial: boolean = false,
     requiringDependencyFrom: number[] = [],
     requiringDependencyTo: number[] = [],
     excludingDependency: number[] = [],
@@ -549,6 +559,7 @@ export class PouchdbService {
       'hasXorSubfeatures': this.getBoolean(hasXOrSubfature),
       'isDeletable': this.getBoolean(isDeletetable),
       'isPhysical': this.getBoolean(isPhysical),
+      'isMaterial': this.getBoolean(isMaterial),
       'requiringDependencyFrom': requiringDependencyFrom,
       'requiringDependencyTo': requiringDependencyTo,
       'excludingDependency': excludingDependency,
@@ -556,8 +567,19 @@ export class PouchdbService {
     };
   }
 
+  async updateMaterial(featureModelId: string, featureId: number, material: Material) {
+    const materialUpdater = (feature: any) => {
+      feature.material = material;
+      return feature;
+    };
+
+    const featureModel = await this.getFeatureModel(featureModelId);
+    this.updateFeatureHandler(featureModel, featureId, materialUpdater);
+
+    return this.db.put(featureModel);
+  }
+
   async updateMetadata(featureModelId: string, featureId: number, metadata: Metadata) {
-    console.log(metadata)
     const metadataUpdater = (feature: any) => {
       feature.metadata = metadata;
       return feature;

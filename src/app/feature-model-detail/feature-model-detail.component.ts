@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
+import { Material } from "../models/material";
 import { Metadata } from '../models/metadata';
 import { PouchdbService } from '../service/pouchdb.service';
 
@@ -21,6 +22,7 @@ import { PouchdbService } from '../service/pouchdb.service';
 export class FeatureModelDetailComponent implements OnInit {
   // Variables for the feature model representation
   featureList: any[] = [];
+  inheritableFeatures: any[] = [];
   featureModelId: string;
   featureModel: any;
   // Variables for the modal representation
@@ -34,11 +36,13 @@ export class FeatureModelDetailComponent implements OnInit {
   dependencyForm: FormGroup;
   modalFeatureForm: FormGroup;
   metadataForm: FormGroup;
+  materialForm: FormGroup;
   // References for modal children
   @ViewChild('dependencyModal', { 'static': true }) dependencyModal: any;
   @ViewChild('updateModal', { 'static': true }) updateModal: any;
   @ViewChild('deleteModal', { 'static': true }) deleteModal: any;
   @ViewChild('metadataModal', { 'static': true }) metadataModal: any;
+  @ViewChild('materialModal', { 'static': true }) materialModal: any;
 
   /**
    * Creates a new instance of the FeatureModelDetailComponent.
@@ -92,6 +96,7 @@ export class FeatureModelDetailComponent implements OnInit {
         hasOrSubfeatures: this.modalFeature.hasOrSubfeatures,
         hasXorSubfeatures: this.modalFeature.hasXorSubfeatures,
         isPhysical: this.modalFeature.isPhysical,
+        isMaterial: this.modalFeature.isMaterial,
         subfeatureOf: this.modalFeature.parentId
       });
       this.modalReference = this.modalService.open(this.updateModal, { size: 'lg' });
@@ -113,6 +118,22 @@ export class FeatureModelDetailComponent implements OnInit {
     });
   }
 
+  async openMaterialModal(featureId) {
+    try {
+      this.modalFeature = await this.pouchDBServer.getFeatureWithParent(this.featureModelId, featureId);
+      this.modalSubfeatureIds = this.pouchDBServer.listSubfeatureIdsHelper(this.modalFeature.features);
+
+      let material = new Material(this.modalFeature.material);
+      this.materialForm = this.fb.group({
+        textureFilename: [material.textureFilename, Validators.required],
+        price: [material.price, Validators.min(0)],
+      });
+      this.modalReference = this.modalService.open(this.materialModal, { size: 'lg' });
+    } catch (error) {
+      console.log('openMaterialModal:', error);
+    }
+  }
+
   async openMetadataModal(featureId) {
     try {
       this.modalFeature = await this.pouchDBServer.getFeatureWithParent(this.featureModelId, featureId);
@@ -124,7 +145,8 @@ export class FeatureModelDetailComponent implements OnInit {
         brand: [metadata.brand],
         price: [metadata.price, Validators.min(0)],
         leftSlot: [metadata.leftSlot],
-        rightSlot: [metadata.rightSlot]
+        rightSlot: [metadata.rightSlot],
+        upperSlot: [metadata.upperSlot]
       });
       this.modalReference = this.modalService.open(this.metadataModal, { size: 'lg' });
     } catch (error) {
@@ -176,7 +198,8 @@ export class FeatureModelDetailComponent implements OnInit {
       this.modalFeatureForm.value.hasOrSubfeatures,
       this.modalFeatureForm.value.hasXorSubfeatures,
       this.modalFeatureForm.value.subfeatureOf,
-      this.modalFeatureForm.value.isPhysical
+      this.modalFeatureForm.value.isPhysical,
+      this.modalFeatureForm.value.isMaterial
     ).then(result => {
       this.closeModal();
     }, error => {
@@ -196,6 +219,11 @@ export class FeatureModelDetailComponent implements OnInit {
     });
   }
 
+  async updateMaterial() {
+    await this.pouchDBServer.updateMaterial(this.featureModelId, this.modalFeature.id, new Material(this.materialForm.value));
+    this.closeModal();
+  }
+
   async updateMetadata() {
     await this.pouchDBServer.updateMetadata(this.featureModelId, this.modalFeature.id, new Metadata(this.metadataForm.value));
     this.closeModal();
@@ -212,7 +240,8 @@ export class FeatureModelDetailComponent implements OnInit {
       hasOrSubfeatures: false,
       hasXorSubfeatures: false,
       subfeatureOf: ["1"],
-      isPhysical: false
+      isPhysical: false,
+      isMaterial: false
     });
     this.dependencyForm = this.fb.group({ dependencyType: 'requiringDependencyTo', fromFeatureId: ["1"], toFeatureId: ["2"] });
   }
@@ -226,6 +255,7 @@ export class FeatureModelDetailComponent implements OnInit {
       this.featureModel = result;
       this.featureModelForm.patchValue({ name: this.featureModel.name, description: this.featureModel.description });
       this.featureList = this.getFeaturesAsList();
+      this.inheritableFeatures = this.featureList.filter(f => !f.isPhysical && !f.isMaterial);
     }, error => {
       console.log("LoadFeatureModel: " + error);
     });
@@ -242,7 +272,8 @@ export class FeatureModelDetailComponent implements OnInit {
       this.featureForm.value.hasOrSubfeatures,
       this.featureForm.value.hasXorSubfeatures,
       this.featureForm.value.subfeatureOf,
-      this.featureForm.value.isPhysical
+      this.featureForm.value.isPhysical,
+      this.featureForm.value.isMaterial
     ).then(result => {
       this.loadForms();
       this.loadFeatureModel(this.featureModelId);
@@ -317,7 +348,8 @@ export class FeatureModelDetailComponent implements OnInit {
         name: f.name,
         levelname: "-".repeat(f.level) + " " + f.name,
         level: f.level,
-        physical: f.isPhysical
+        isPhysical: f.isPhysical,
+        isMaterial: f.isMaterial
       });
 
       // Add new features to the stack

@@ -16,6 +16,7 @@ export class FeatureTreeComponent {
   @Output() updateFeatureEmitter = new EventEmitter();
   @Output() deleteFeatureEmitter = new EventEmitter();
   @Output() editMetadataEmitter = new EventEmitter();
+  @Output() editMaterialEmitter = new EventEmitter();
 
   /**
    * Emit Event to open dependencies of current feature.
@@ -71,6 +72,14 @@ export class FeatureTreeComponent {
 
   editMetadataForwardEmitter(featureId: any) {
     this.editMetadata(featureId);
+  }
+
+  editMaterial(featureId: any) {
+    this.editMaterialEmitter.emit(featureId);
+  }
+
+  editMaterialForwardEmitter(featureId: any) {
+    this.editMaterial(featureId);
   }
 
 }

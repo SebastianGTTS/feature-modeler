@@ -1,6 +1,7 @@
 <ul *ngIf="features" class="list-group inner">
 
-  <li *ngFor="let f of features" class="list-group-item align-items-center pr-0 border-0">
+  <li *ngFor="let f of features" class="list-group-item align-items-center p-0 border-0"
+      [ngClass]="{ 'pl-4' : f.id > 1 }">
     <div class="hover-line d-flex justify-content-between p-2">
       <div>
         <span *ngIf="f.feature != 0"><b></b></span>
@@ -16,22 +17,25 @@
       </div>
 
       <div>
-        <button *ngIf="f.isPhysical" (click)="editMetadata(f.id)" type="button" class="btn btn-primary btn-xs">
+        <button *ngIf="f.isMaterial" (click)="editMaterial(f.id)" type="button" class="btn btn-info btn-xs">
+          Edit Material
+        </button>
+        <button *ngIf="f.isPhysical" (click)="editMetadata(f.id)" type="button" class="btn btn-primary btn-xs ml-1">
           Edit Metadata
         </button>
         <button type="button"
                 *ngIf="f.requiringDependencyTo.length != 0 || f.requiringDependencyFrom.length != 0 || f.excludingDependency.length != 0"
                 class="btn btn-dark btn-xs ml-1" (click)="openDependencies(f.id)">Show Dependencies</button>
-        <button (click)="updateFeature(f.id)" type="button" class="btn btn-warning btn-xs mx-1">Update</button>
+        <button (click)="updateFeature(f.id)" type="button" class="btn btn-warning btn-xs mx-1">Edit Feature</button>
         <button [ngClass]="{ 'invisible' : !f.isDeletable }" (click)="deleteFeature(f.id)" type="button"
                 class="btn btn-danger btn-xs">Delete</button>
       </div>
     </div>
-    <app-feature-tree [features]="f.features"
-                      (openDependenciesEmitter)="openDependenciesForwardEmitter($event)"
+    <app-feature-tree [features]="f.features" (openDependenciesEmitter)="openDependenciesForwardEmitter($event)"
                       (updateFeatureEmitter)="updateFeatureForwardEmitter($event)"
                       (deleteFeatureEmitter)="deleteFeatureForwardEmitter($event)"
-                      (editMetadataEmitter)="editMetadataForwardEmitter($event)"></app-feature-tree>
+                      (editMetadataEmitter)="editMetadataForwardEmitter($event)"
+                      (editMaterialEmitter)="editMaterialForwardEmitter($event)"></app-feature-tree>
   </li>
 
 </ul>

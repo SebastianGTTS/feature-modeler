@@ -90,7 +90,7 @@
           <label for="subfeatureOf" class="col-sm-4 col-form-label">Subfeature of</label>
           <div class="col-sm-8">
             <select id="subfeatureOf" formControlName="subfeatureOf" class="form-control">
-              <option *ngFor="let fl of featureList; let i = index;"
+              <option *ngFor="let fl of inheritableFeatures; let i = index;"
                       [disabled]="fl.id == modalFeature.id || modalSubfeatureIds.includes(fl.id)" value="{{fl.id}}">
                 {{fl.levelname}}
               </option>
@@ -140,6 +140,16 @@
         </div>
 
         <div class="form-group row">
+          <label for="isMaterial" class="col-sm-4 col-form-label">Is Material</label>
+          <div class="col-sm-8">
+            <select id="isMaterial" formControlName="isMaterial" class="form-control">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
           <div class="col-sm-12">
             <button type="submit" class="btn btn-dark btn-block" [disabled]="!modalFeatureForm.valid">
               Update Feature
@@ -153,7 +163,10 @@
 
 <ng-template #metadataModal let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">{{modalFeature.name}} Metadata</h4>
+    <h4 class="modal-title" id="modal-basic-title">
+      {{modalFeature.name}}
+      <small class="ml-1">[Metadata]</small>
+    </h4>
     <button type="button" class="close" aria-label="Close" (click)="closeModal()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -193,9 +206,13 @@
               <option value="0">&lt;Any Component&gt;</option>
               <option disabled>{{ '\u2500'.repeat(15) }}</option>
               <ng-container *ngFor="let feature of featureList;">
-                <option *ngIf="feature.id !== modalFeature.id && feature.id > 1" [value]="feature.id">
-                  {{ feature.name }}
-                </option>
+                <option *ngIf="feature.id !== modalFeature.id && feature.id > 1 && !feature.isPhysical"
+                        [value]="feature.id"> {{ feature.name }} </option>
+              </ng-container>
+              <option disabled>{{ '\u2500'.repeat(15) }}</option>
+              <ng-container *ngFor="let feature of featureList;">
+                <option *ngIf="feature.id !== modalFeature.id && feature.id > 1 && feature.isPhysical"
+                        [value]="feature.id"> {{ feature.name }} </option>
               </ng-container>
             </select>
           </div>
@@ -209,9 +226,33 @@
               <option value="0">&lt;Any Component&gt;</option>
               <option disabled>{{ '\u2500'.repeat(15) }}</option>
               <ng-container *ngFor="let feature of featureList;">
-                <option *ngIf="feature.id !== modalFeature.id && feature.id > 1" [value]="feature.id">
-                  {{ feature.name }}
-                </option>
+                <option *ngIf="feature.id !== modalFeature.id && feature.id > 1 && !feature.isPhysical"
+                        [value]="feature.id"> {{ feature.name }} </option>
+              </ng-container>
+              <option disabled>{{ '\u2500'.repeat(15) }}</option>
+              <ng-container *ngFor="let feature of featureList;">
+                <option *ngIf="feature.id !== modalFeature.id && feature.id > 1 && feature.isPhysical"
+                        [value]="feature.id"> {{ feature.name }} </option>
+              </ng-container>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="upperSlot" class="col-sm-4 col-form-label">Upper Slot</label>
+          <div class="col-sm-8">
+            <select id="upperSlot" formControlName="upperSlot" class="form-control">
+              <option value="-1">&lt;Disabled&gt;</option>
+              <option value="0">&lt;Any Component&gt;</option>
+              <option disabled>{{ '\u2500'.repeat(15) }}</option>
+              <ng-container *ngFor="let feature of featureList;">
+                <option *ngIf="feature.id !== modalFeature.id && feature.id > 1 && !feature.isPhysical"
+                        [value]="feature.id"> {{ feature.name }} </option>
+              </ng-container>
+              <option disabled>{{ '\u2500'.repeat(15) }}</option>
+              <ng-container *ngFor="let feature of featureList;">
+                <option *ngIf="feature.id !== modalFeature.id && feature.id > 1 && feature.isPhysical"
+                        [value]="feature.id"> {{ feature.name }} </option>
               </ng-container>
             </select>
           </div>
@@ -230,19 +271,62 @@
   </div>
 </ng-template>
 
-<div class="nav-scroller bg-white shadow-sm">
+<ng-template #materialModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      {{modalFeature.name}}
+      <small class="ml-1">[Material Properties]</small>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="text-muted pt-3">
+      <form [formGroup]="materialForm" (ngSubmit)="updateMaterial()">
+
+        <div class="form-group row">
+          <label for="textureFilename" class="col-sm-4 col-form-label">
+            Texture <small>(filename w/o extension)</small>
+          </label>
+          <div class="col-sm-8">
+            <input type="text" formControlName="textureFilename" class="form-control" id="textureFilename">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="price" class="col-sm-4 col-form-label">Price</label>
+          <div class="col-sm-8">
+            <input type="number" min="0" step="0.01" formControlName="price" class="form-control" id="price">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <button type="submit" class="btn btn-dark btn-block" [disabled]="!materialForm.valid">
+              Update Material
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<!-- <div class="nav-scroller bg-white shadow-sm">
   <nav class="nav nav-underline">
     <a *ngIf="featureModel" class="nav-link" [routerLink]="['/featuremodelview', featureModel._id]">View
       {{featureModel.name}}</a>
     <a *ngIf="featureModel" class="nav-link active" [routerLink]="['/featuremodel', featureModel._id]">Edit
       {{featureModel.name}}</a>
   </nav>
-</div>
+</div> -->
 
 <main *ngIf="featureModel" role="main" class="container">
   <!-- List of Features -->
   <div class="my-3 p-3 bg-white rounded shadow-sm">
-    <h6 class="border-bottom border-gray pb-2 mb-0">Feature Model List</h6>
+    <h6 class="border-bottom border-gray pb-2 mb-0">Features in This Feature Model</h6>
 
     <div class="row">
       <div class="col-sm-12">
@@ -250,7 +334,8 @@
                           (openDependenciesEmitter)="openDependenciesModal($event)"
                           (updateFeatureEmitter)="updateFeatureModal($event)"
                           (deleteFeatureEmitter)="deleteFeatureModal($event)"
-                          (editMetadataEmitter)="openMetadataModal($event)" [features]="featureModel.features">
+                          (editMetadataEmitter)="openMetadataModal($event)"
+                          (editMaterialEmitter)="openMaterialModal($event)" [features]="featureModel.features">
         </app-feature-tree>
       </div>
     </div>
@@ -290,7 +375,8 @@
           <label for="subfeatureOf" class="col-sm-4 col-form-label">Subfeature of</label>
           <div class="col-sm-8">
             <select id="subfeatureOf" formControlName="subfeatureOf" class="form-control">
-              <option *ngFor="let fl of featureList; let i = index;" value="{{fl.id}}">{{fl.levelname}}
+              <option *ngFor="let fl of inheritableFeatures; let i = index;" value="{{fl.id}}">
+                {{fl.levelname}}
               </option>
             </select>
 
@@ -331,6 +417,16 @@
           <label for="isPhysical" class="col-sm-4 col-form-label">Is Physical</label>
           <div class="col-sm-8">
             <select id="isPhysical" formControlName="isPhysical" class="form-control">
+              <option value="true">Yes</option>
+              <option value="false" selected>No</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="isMaterial" class="col-sm-4 col-form-label">Is Material</label>
+          <div class="col-sm-8">
+            <select id="isMaterial" formControlName="isMaterial" class="form-control">
               <option value="true">Yes</option>
               <option value="false" selected>No</option>
             </select>
