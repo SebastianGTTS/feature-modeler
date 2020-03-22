@@ -22,48 +22,48 @@ export class FeatureTreeComponent {
    * Emit Event to open dependencies of current feature.
    * @param featureId current feature
    */
-  openDependencies(featureId: any){
-    this.openDependenciesEmitter.emit(featureId)
+  openDependencies(featureId: any) {
+    this.openDependenciesEmitter.emit(featureId);
   }
 
   /**
    * Forward event emitter to open dependencies of current feature.
    * @param featureId current feature
    */
-  openDependenciesForwardEmitter(featureId:any){
-    this.openDependencies(featureId)
+  openDependenciesForwardEmitter(featureId: any) {
+    this.openDependencies(featureId);
   }
 
   /**
    * Emit Event to update current feature.
    * @param featureId current feature
    */
-  updateFeature(featureId: any){
-    this.updateFeatureEmitter.emit(featureId)
+  updateFeature(featureId: any) {
+    this.updateFeatureEmitter.emit(featureId);
   }
 
   /**
    * Forward event emitter to update current feature.
    * @param featureId current feature
    */
-  updateFeatureForwardEmitter(featureId:any){
-    this.updateFeature(featureId)
+  updateFeatureForwardEmitter(featureId: any) {
+    this.updateFeature(featureId);
   }
 
   /**
    * Emit Event to delete current feature.
    * @param featureId current feature
    */
-  deleteFeature(featureId: any){
-    this.deleteFeatureEmitter.emit(featureId)
+  deleteFeature(featureId: any) {
+    this.deleteFeatureEmitter.emit(featureId);
   }
 
   /**
    * Forward event emitter to delete current feature.
    * @param featureId current feature
    */
-  deleteFeatureForwardEmitter(featureId:any){
-    this.deleteFeature(featureId)
+  deleteFeatureForwardEmitter(featureId: any) {
+    this.deleteFeature(featureId);
   }
 
   editMetadata(featureId: any) {

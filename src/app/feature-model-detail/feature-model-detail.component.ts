@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
-import { Material } from "../models/material";
+import { Material } from '../models/material';
 import { Metadata } from '../models/metadata';
 import { PouchdbService } from '../service/pouchdb.service';
 
@@ -38,11 +38,11 @@ export class FeatureModelDetailComponent implements OnInit {
   metadataForm: FormGroup;
   materialForm: FormGroup;
   // References for modal children
-  @ViewChild('dependencyModal', { 'static': true }) dependencyModal: any;
-  @ViewChild('updateModal', { 'static': true }) updateModal: any;
-  @ViewChild('deleteModal', { 'static': true }) deleteModal: any;
-  @ViewChild('metadataModal', { 'static': true }) metadataModal: any;
-  @ViewChild('materialModal', { 'static': true }) materialModal: any;
+  @ViewChild('dependencyModal', { static: true }) dependencyModal: any;
+  @ViewChild('updateModal', { static: true }) updateModal: any;
+  @ViewChild('deleteModal', { static: true }) deleteModal: any;
+  @ViewChild('metadataModal', { static: true }) metadataModal: any;
+  @ViewChild('materialModal', { static: true }) materialModal: any;
 
   /**
    * Creates a new instance of the FeatureModelDetailComponent.
@@ -52,7 +52,8 @@ export class FeatureModelDetailComponent implements OnInit {
    * @param pouchDBServer PouchdbService
    * @param modalService NgbModal
    */
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private location: Location,
     private pouchDBServer: PouchdbService,
@@ -78,7 +79,7 @@ export class FeatureModelDetailComponent implements OnInit {
       this.modalFeature = result;
       this.modalReference = this.modalService.open(this.dependencyModal, { size: 'lg' });
     }, error => {
-      console.log("OpenDependencyModal: " + error);
+      console.log('OpenDependencyModal: ' + error);
     });
   }
 
@@ -101,8 +102,8 @@ export class FeatureModelDetailComponent implements OnInit {
       });
       this.modalReference = this.modalService.open(this.updateModal, { size: 'lg' });
     }, error => {
-      console.log("UpdateFeatureModal: " + error);
-    })
+      console.log('UpdateFeatureModal: ' + error);
+    });
   }
 
   /**
@@ -114,7 +115,7 @@ export class FeatureModelDetailComponent implements OnInit {
       this.modalFeature = result;
       this.modalReference = this.modalService.open(this.deleteModal, { size: 'lg' });
     }, error => {
-      console.log("DeleteFeatureModal: " + error);
+      console.log('DeleteFeatureModal: ' + error);
     });
   }
 
@@ -123,7 +124,7 @@ export class FeatureModelDetailComponent implements OnInit {
       this.modalFeature = await this.pouchDBServer.getFeatureWithParent(this.featureModelId, featureId);
       this.modalSubfeatureIds = this.pouchDBServer.listSubfeatureIdsHelper(this.modalFeature.features);
 
-      let material = new Material(this.modalFeature.material);
+      const material = new Material(this.modalFeature.material);
       this.materialForm = this.fb.group({
         textureFilename: [material.textureFilename, Validators.required],
         price: [material.price, Validators.min(0)],
@@ -139,7 +140,7 @@ export class FeatureModelDetailComponent implements OnInit {
       this.modalFeature = await this.pouchDBServer.getFeatureWithParent(this.featureModelId, featureId);
       this.modalSubfeatureIds = this.pouchDBServer.listSubfeatureIdsHelper(this.modalFeature.features);
 
-      let metadata = new Metadata(this.modalFeature.metadata);
+      const metadata = new Metadata(this.modalFeature.metadata);
       this.metadataForm = this.fb.group({
         modelFilename: [metadata.modelFilename, Validators.required],
         brand: [metadata.brand],
@@ -179,10 +180,10 @@ export class FeatureModelDetailComponent implements OnInit {
         this.modalFeature = result;
         this.loadFeatureModel(this.featureModelId);
       }, error => {
-        console.log("DeleteDependency (new load): " + error);
+        console.log('DeleteDependency (new load): ' + error);
       });
     }, error => {
-      console.log("DeleteDependency: " + error);
+      console.log('DeleteDependency: ' + error);
     });
   }
 
@@ -203,7 +204,7 @@ export class FeatureModelDetailComponent implements OnInit {
     ).then(result => {
       this.closeModal();
     }, error => {
-      console.log("UpdateFeature: " + error);
+      console.log('UpdateFeature: ' + error);
     });
   }
 
@@ -215,7 +216,7 @@ export class FeatureModelDetailComponent implements OnInit {
     this.pouchDBServer.deleteFeature(this.featureModelId, featureId).then(result => {
       this.closeModal();
     }, error => {
-      console.log("DeleteFeature: " + error);
+      console.log('DeleteFeature: ' + error);
     });
   }
 
@@ -239,11 +240,11 @@ export class FeatureModelDetailComponent implements OnInit {
       isMandatory: false,
       hasOrSubfeatures: false,
       hasXorSubfeatures: false,
-      subfeatureOf: ["1"],
+      subfeatureOf: ['1'],
       isPhysical: false,
       isMaterial: false
     });
-    this.dependencyForm = this.fb.group({ dependencyType: 'requiringDependencyTo', fromFeatureId: ["1"], toFeatureId: ["2"] });
+    this.dependencyForm = this.fb.group({ dependencyType: 'requiringDependencyTo', fromFeatureId: ['1'], toFeatureId: ['2'] });
   }
 
   /**
@@ -257,7 +258,7 @@ export class FeatureModelDetailComponent implements OnInit {
       this.featureList = this.getFeaturesAsList();
       this.inheritableFeatures = this.featureList.filter(f => !f.isPhysical && !f.isMaterial);
     }, error => {
-      console.log("LoadFeatureModel: " + error);
+      console.log('LoadFeatureModel: ' + error);
     });
   }
 
@@ -278,7 +279,7 @@ export class FeatureModelDetailComponent implements OnInit {
       this.loadForms();
       this.loadFeatureModel(this.featureModelId);
     }, error => {
-      console.log("InsertFeature: " + error);
+      console.log('InsertFeature: ' + error);
     });
   }
 
@@ -295,7 +296,7 @@ export class FeatureModelDetailComponent implements OnInit {
       this.loadForms();
       this.loadFeatureModel(this.featureModelId);
     }, error => {
-      console.log("InsertDependency: " + error);
+      console.log('InsertDependency: ' + error);
     });
   }
 
@@ -310,7 +311,7 @@ export class FeatureModelDetailComponent implements OnInit {
     ).then(result => {
       // Do nothing
     }, error => {
-      console.log("UpdateFeatureModel: " + error);
+      console.log('UpdateFeatureModel: ' + error);
     });
   }
 
@@ -322,7 +323,7 @@ export class FeatureModelDetailComponent implements OnInit {
       // Return back to home page
       this.location.back();
     }, error => {
-      console.log("DeleteFeatureModel: " + error);
+      console.log('DeleteFeatureModel: ' + error);
     });
   }
 
@@ -330,23 +331,23 @@ export class FeatureModelDetailComponent implements OnInit {
    * Create a list of all features.
    */
   getFeaturesAsList(): any[] {
-    var featureList: any[] = []
-    var featureStack: any[] = []
+    const featureList: any[] = [];
+    const featureStack: any[] = [];
 
     // Insert first level into the stack
-    for (var i = 0; i < this.featureModel.features.length; i++) {
-      var model = this.featureModel.features[this.featureModel.features.length - 1 - i]
+    for (let i = 0; i < this.featureModel.features.length; i++) {
+      const model = this.featureModel.features[this.featureModel.features.length - 1 - i];
       model.level = 1;
       featureStack.push(model);
     }
 
     // Select single feature from the stack
     while (featureStack.length > 0) {
-      var f = featureStack.pop();
+      const f = featureStack.pop();
       featureList.push({
         id: f.id,
         name: f.name,
-        levelname: "-".repeat(f.level) + " " + f.name,
+        levelname: '-'.repeat(f.level) + ' ' + f.name,
         level: f.level,
         isPhysical: f.isPhysical,
         isMaterial: f.isMaterial
@@ -354,8 +355,8 @@ export class FeatureModelDetailComponent implements OnInit {
 
       // Add new features to the stack
       if (f.features) {
-        for (var i = 0; i < f.features.length; i++) {
-          var model = f.features[f.features.length - 1 - i];
+        for (let i = 0; i < f.features.length; i++) {
+          const model = f.features[f.features.length - 1 - i];
           model.level = f.level + 1;
           featureStack.push(model);
         }
