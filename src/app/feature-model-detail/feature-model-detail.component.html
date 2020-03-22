@@ -201,9 +201,9 @@
         <div class="form-group row">
           <label for="leftSlot" class="col-sm-4 col-form-label">Left Slot</label>
           <div class="col-sm-8">
-            <select id="leftSlot" formControlName="leftSlot" class="form-control">
-              <option value="-1">&lt;Disabled&gt;</option>
-              <option value="0">&lt;Any Component&gt;</option>
+            <select id="leftSlot" formControlName="leftSlot" class="form-control" multiple>
+              <option [value]="-1">&lt;Disabled&gt;</option>
+              <option [value]="0">&lt;Any Component&gt;</option>
               <option disabled>{{ '\u2500'.repeat(15) }}</option>
               <ng-container *ngFor="let feature of featureList;">
                 <option *ngIf="feature.id !== modalFeature.id && feature.id > 1 && !feature.isPhysical"
@@ -221,9 +221,9 @@
         <div class="form-group row">
           <label for="rightSlot" class="col-sm-4 col-form-label">Right Slot</label>
           <div class="col-sm-8">
-            <select id="rightSlot" formControlName="rightSlot" class="form-control">
-              <option value="-1">&lt;Disabled&gt;</option>
-              <option value="0">&lt;Any Component&gt;</option>
+            <select id="rightSlot" formControlName="rightSlot" class="form-control" multiple>
+              <option [value]="-1">&lt;Disabled&gt;</option>
+              <option [value]="0">&lt;Any Component&gt;</option>
               <option disabled>{{ '\u2500'.repeat(15) }}</option>
               <ng-container *ngFor="let feature of featureList;">
                 <option *ngIf="feature.id !== modalFeature.id && feature.id > 1 && !feature.isPhysical"
@@ -241,9 +241,9 @@
         <div class="form-group row">
           <label for="upperSlot" class="col-sm-4 col-form-label">Upper Slot</label>
           <div class="col-sm-8">
-            <select id="upperSlot" formControlName="upperSlot" class="form-control">
-              <option value="-1">&lt;Disabled&gt;</option>
-              <option value="0">&lt;Any Component&gt;</option>
+            <select id="upperSlot" formControlName="upperSlot" class="form-control" multiple>
+              <option [value]="-1">&lt;Disabled&gt;</option>
+              <option [value]="0">&lt;Any Component&gt;</option>
               <option disabled>{{ '\u2500'.repeat(15) }}</option>
               <ng-container *ngFor="let feature of featureList;">
                 <option *ngIf="feature.id !== modalFeature.id && feature.id > 1 && !feature.isPhysical"
