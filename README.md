@@ -1,10 +1,11 @@
-# BMDL Feature Modeler
-Describe Business Models through a Business Model Decision Line (BMDL) by using Feature Models
+# Feature Modeler
+This Angular-based tool allows you to create Feature Models and export them as JSON.
 
 ## Introduction
-The BMDL Feature Modeler is a tool to describe Business Models through a combination of the Business Model Canvas (BMC) and a Software Product Line (SPL). We call this concept Business Model Decision Line (BMDL), where each feature describes a single business model decision. Features can be ordered in hierarchies and marked as mandatory or optional for the business models. Moreover, there can be Or (at least one sub-feature is selected) and Alternate (exactly one sub-feature is selected) relationships between a parent and a child feature. To refine the business models, cross-tree constraints for requiring and excluding dependencies can be made.
+This tool provides a browser-based interface to create Feature Models and is based on the [Angular framework](https://angular.io/) and the [PouchDB database](https://pouchdb.com/). It supports the basic set of Feature Model properties such as hierarchical feature trees, excluding and requiring dependencies, mandatory and optional features as well as OR and XOR feature selections. More advanced Feature Model additions like cardinalities are not currently supported. Feature Models created with this modeler can be exported as a JSON file.
 
-The current state of the tool allows the creation of feature models and the deriving of business models. New business model decisions of single business models are synchronized with the corresponding feature model to ensure consistency. Moreover, the conformance of business models can be checked with the feature model and occurring conformance errors are explained. The tools is based on the [Angular framework](https://angular.io/) and the [PouchDB database](https://pouchdb.com/) to run directly in the webbrowser.
+This tool was intended as a part of a Master thesis exploring product configuration in Augmented Reality applied to the domain of kitchen furniture. For this reason, the modeler automatically assumes that the models are intended to describe modular kitchens. However, this assumption does not go beyond labeling the root feature a "kitchen" (which can be easily changed in the code) and the tool can be used to describe any product.
+
 ## Screenshots
 
 | Startpage of the Feature Modeler | Creating Feature Model |
@@ -18,19 +19,15 @@ The current state of the tool allows the creation of feature models and the deri
 ## Installation
 
 1. Install [NodeJS](https://nodejs.org) and [AngularCLI](https://cli.angular.io/) 
-2. Clone BMDL Feature Modeler repository to your computer
+2. Clone the feature modeler repository to your computer
 3. Install all NPM packages with `npm install`
 4. Configure database
-    4.1. Internal database: By default the feature modeler is using PouchDB zu store data directly in the web storage of the browser. The database can be changed in `src/app/pouchdb.service.ts` within the variable `databaseName` (default: `bmdl-feature-modeler`)
-    4.2. External database: The feature modeler allows also to use a CouchDB database as a persistent storage. For this, you need to change the `databaseName` in `src/app/pouchdb.service.ts` to `http://localhost:4200/database` and specify the url to the CouchDB in `proxy.conf.json` within the variable `target` (default: `http://localhost:5984/bmdl-modeler`)
+    4.1. Internal database: By default the feature modeler is using PouchDB to store data directly in the web storage of the browser. The database can be changed in `src/app/service/pouchdb.service.ts` within the variable `databaseName` (default: `arpc-feature-modeler`)
+    4.2. External database: The feature modeler also allows to use a CouchDB database as a persistent storage. For this, you need to change the `databaseName` in `src/app/service/pouchdb.service.ts` to `http://localhost:4200/database` and specify the url to the CouchDB in `proxy.conf.json` within the variable `target` (default: `http://localhost:5984/arpc-modeler`)
 5. Start service
     5.1. Internal database: Run the web application with `ng serve`
     5.2. External database: Run the web application with `npm start` to use the proxy for the external database
 6. Have fun with the tool :)
-## Further Information
-
-- **Live Demonstration:** https://sebastiangtts.github.io/bmdl-feature-modeler/
-- **Research Paper:** Currently under review
 
 ## License
 The BMDL Feature Modeler is released under the MIT license.
