@@ -1,12 +1,11 @@
 {
-    "/database/*": {
-      "target": "http://localhost:5984/bmdl-modeler",
-      "secure": false,
-      "logLevel": "debug",
-      "changeOrigin": true,
-      "pathRewrite": {
-        "^/database": ""
-      }
-  
+  "/database/*": {
+    "target": "http://localhost:5984/arpc-modeler",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/database": ""
     }
   }
+}
