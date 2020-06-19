@@ -22,7 +22,9 @@ This tool was intended as a part of a Master thesis exploring product configurat
 2. Clone the feature modeler repository to your computer
 3. Install all NPM packages with `npm install`
 4. Configure database
+
     4.1. Internal database: By default the feature modeler is using PouchDB to store data directly in the web storage of the browser. The database can be changed in `src/app/service/pouchdb.service.ts` within the variable `databaseName` (default: `arpc-feature-modeler`)
+    
     4.2. External database: The feature modeler also allows to use a CouchDB database as a persistent storage. For this, you need to change the `databaseName` in `src/app/service/pouchdb.service.ts` to `http://localhost:4200/database` and specify the url to the CouchDB in `proxy.conf.json` within the variable `target` (default: `http://localhost:5984/arpc-modeler`)
 5. Start service
     5.1. Internal database: Run the web application with `ng serve`
