@@ -16,7 +16,6 @@ import { PouchdbService } from '../service/pouchdb.service';
 })
 /**
  * The FeatureModelDetailComponent shows the feature model and allow the adding/updating/deleting of features and dependencies.
- *
  * @author: Sebastian Gottschalk
  */
 export class FeatureModelDetailComponent implements OnInit {
@@ -174,7 +173,7 @@ export class FeatureModelDetailComponent implements OnInit {
    * @param toFeatureId id of the second feature model
    */
   deleteDependency(dependencyType: string, fromFeatureId: number, toFeatureId: number): void {
-    this.pouchDBServer.deleteDependency(this.featureModelId, dependencyType, fromFeatureId, toFeatureId).then(result => {
+    this.pouchDBServer.deleteDependency(this.featureModelId, dependencyType, fromFeatureId, toFeatureId).then(() => {
       // Update the modal view
       this.pouchDBServer.getFeatureWithParent(this.featureModelId, this.modalFeature.id).then(result => {
         this.modalFeature = result;
@@ -365,5 +364,4 @@ export class FeatureModelDetailComponent implements OnInit {
 
     return featureList;
   }
-
 }

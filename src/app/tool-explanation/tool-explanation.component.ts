@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-tool-explanation',
@@ -7,15 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 /**
  * The ToolExplanationComponent shows the explanation of the tool in the web application.
- * 
  * @author Sebastian Gottschalk
  */
-export class ToolExplanationComponent implements OnInit {
-
+export class ToolExplanationComponent {
   constructor() { }
-
-  ngOnInit() {
-    // TODO: Add content in view
-  }
-
 }

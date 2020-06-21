@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { saveAs } from 'file-saver';
 
 import { PouchdbService } from '../service/pouchdb.service';
+
 
 @Component({
   selector: 'app-feature-model',
@@ -14,7 +14,6 @@ import { PouchdbService } from '../service/pouchdb.service';
 /**
  * The FeatureModelComponent shows a starting page where all existing feature models
  * can be discovered and new feature models can be created.
- *
  * @author: Sebastian Gottschalk
  */
 export class FeatureModelComponent {

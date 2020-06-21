@@ -1,8 +1,8 @@
 # MIT License
 
-The BMDL Feature Modeler is licensed under the MIT License
+The Feature Modeler is licensed under the MIT License
 
-Copyright (c) 2019 Sebastian Gottschalk
+Copyright (c) 2020 Sebastian Gottschalk
 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

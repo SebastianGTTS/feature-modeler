@@ -81,5 +81,4 @@ export class FeatureTreeComponent {
   editMaterialForwardEmitter(featureId: any) {
     this.editMaterial(featureId);
   }
-
 }
