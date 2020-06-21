@@ -74,14 +74,6 @@ export class FeatureModelComponent {
   }
 
   /**
-   * Navigate to a component to view the current feature model.
-   * @param featureModelId id of the current feature model
-   */
-  viewFeatureModel(featureModelId: string): void {
-    this.router.navigate(['/featuremodelview', featureModelId]);
-  }
-
-  /**
    * Navigate to a component to edit the current feature model.
    * @param featureModelId id of the current feature model
    */
