@@ -9,7 +9,6 @@
     <div class="alert alert-warning" role="alert">
       <p>You are trying to remove the feature "{{modalFeature.name}}". Please keep in mind that you are removing
         also all subfeatures together with the corresponding dependencies.</p>
-      <p>Moreover, the feature is also removed from all business canvases.</p>
     </div>
   </div>
   <div class="modal-footer">
@@ -39,7 +38,6 @@
               *ngFor=" let mf  of modalFeature.requiringDependencyTo">{{featureModel.featureMap[mf]}}
             <button (click)="deleteDependency('requiringDependencyTo', modalFeature.id, mf)" type="button"
                     class="btn btn-warning btn-xs bottom-right">Delete</button>
-
           </li>
         </ul>
       </li>
@@ -50,7 +48,6 @@
               *ngFor=" let mf  of modalFeature.requiringDependencyFrom">{{featureModel.featureMap[mf]}}
             <button (click)="deleteDependency('requiringDependencyFrom', modalFeature.id, mf)" type="button"
                     class="btn btn-warning btn-xs bottom-right">Delete</button>
-
           </li>
         </ul>
       </li>
@@ -95,7 +92,6 @@
                 {{fl.levelname}}
               </option>
             </select>
-
           </div>
         </div>
 
@@ -314,15 +310,6 @@
   </div>
 </ng-template>
 
-<!-- <div class="nav-scroller bg-white shadow-sm">
-  <nav class="nav nav-underline">
-    <a *ngIf="featureModel" class="nav-link" [routerLink]="['/featuremodelview', featureModel._id]">View
-      {{featureModel.name}}</a>
-    <a *ngIf="featureModel" class="nav-link active" [routerLink]="['/featuremodel', featureModel._id]">Edit
-      {{featureModel.name}}</a>
-  </nav>
-</div> -->
-
 <main *ngIf="featureModel" role="main" class="container">
   <!-- List of Features -->
   <div class="my-3 p-3 bg-white rounded shadow-sm">
@@ -379,7 +366,6 @@
                 {{fl.levelname}}
               </option>
             </select>
-
           </div>
         </div>
 

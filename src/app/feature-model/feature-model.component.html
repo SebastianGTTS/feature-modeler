@@ -15,26 +15,25 @@
     </div>
   </div>
 
-  <!-- <div class="my-3 p-3 bg-white rounded shadow-sm">
+  <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h6 class="border-bottom border-gray pb-2 mb-0">Short introduction</h6>
     <div class="text-muted pt-3">
-      <p>The BMDL Feature Modeler is a tool to describe Business Models through a combination of the Business Model
-        Canvas (BMC) and a Software Product Line (SPL). We call this concept Business Model Decision Line (BMDL), where
-        each feature describes a single business model decision. Features can be ordered in hierarchies and marked as
-        mandatory or optional for the business models. Moreover, there can be Or (at least one sub-feature is selected)
-        and Alternate (exactly one sub-feature is selected) relationships between a parent and a child feature. To
-        refine the business models, cross-tree constraints for requiring and excluding dependencies can be made.</p>
+      <p>This tool provides a browser-based interface to create Feature Models and is based on the Angular framework and
+        the PouchDB database. It supports the basic set of Feature Model properties such as hierarchical feature trees,
+        excluding and requiring dependencies, mandatory and optional features as well as OR and XOR feature selections.
+        More advanced Feature Model additions like cardinalities are not currently supported. Feature Models created
+        with this modeler can be exported as a JSON file.</p>
 
-      <p>The current state of the tool allows the creation of feature models and the deriving of business models. New
-        business model decisions of single business models are synchronized with the corresponding feature model to
-        ensure consistency. Moreover, the conformance of business models can be checked with the feature model and
-        occurring conformance errors are explained.</p>
+      <p>This tool was intended as a part of a Master thesis exploring product configuration in Augmented Reality
+        applied to the domain of kitchen furniture. For this reason, the modeler automatically assumes that the models
+        are intended to describe modular kitchens. However, this assumption does not go beyond labeling the root feature
+        a "kitchen" (which can be easily changed in the code) and the tool can be used to describe any product.</p>
 
       <button type="button" routerLink="/explanation" class="btn btn-dark btn-sm btn-block">
         View Full Tool Explanation
       </button>
     </div>
-  </div> -->
+  </div>
 
   <!-- List Feature Models -->
   <div class="my-3 p-3 bg-white rounded shadow-sm">
@@ -54,10 +53,9 @@
 
       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <div class="d-flex justify-content-between align-items-center ">
-          <strong (click)="viewFeatureModel(fm._id)" class="text-gray-dark">{{fm.name}}</strong>
+          <strong class="text-gray-dark">{{fm.name}}</strong>
           <span>
             <button (click)="saveFeatureModel(fm._id)" type="button" class="btn btn-success btn-xs">Save</button> &nbsp;
-            <!-- <button (click)="viewFeatureModel(fm._id)" type="button" class="btn btn-dark btn-xs">View</button> &nbsp; -->
             <button (click)="editFeatureModel(fm._id)" type="button" class="btn btn-warning btn-xs">Edit</button> &nbsp;
             <button (click)="deleteFeatureModel(fm._id)" type="button" class="btn btn-danger btn-xs">Delete</button>
           </span>

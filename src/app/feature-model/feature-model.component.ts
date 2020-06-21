@@ -12,13 +12,14 @@ import { PouchdbService } from '../service/pouchdb.service';
   styleUrls: ['./feature-model.component.css']
 })
 /**
- * The FeatureModelComponent shows a starting page where all existing feature models can be discovered and new feature models can be created.
+ * The FeatureModelComponent shows a starting page where all existing feature models
+ * can be discovered and new feature models can be created.
  *
  * @author: Sebastian Gottschalk
  */
 export class FeatureModelComponent {
   // List of feature models
-  featureModelList: Array<any>
+  featureModelList: Array<any>;
   // Form to create new feature model
   featureModelForm = this.fb.group({ name: [''], description: [] });
 
@@ -36,15 +37,15 @@ export class FeatureModelComponent {
     // Init default database
     this.pouchDBServer.getDatabaseInfo().then(result => {
       if (result.doc_count === 0) {
-        this.pouchDBServer.resetDatabase().then(result => {
+        this.pouchDBServer.resetDatabase().then(() => {
           this.refreshFeatureModelList();
         }, error => {
-          console.log("Default Constructor (inner): " + error);
-        })
+          console.log('Default Constructor (inner): ' + error);
+        });
       }
     }, error => {
-      console.log("Default Constructor: " + error);
-    })
+      console.log('Default Constructor: ' + error);
+    });
 
     this.refreshFeatureModelList();
   }
@@ -56,20 +57,20 @@ export class FeatureModelComponent {
     this.pouchDBServer.addFeatureModel(this.featureModelForm.value.name, this.featureModelForm.value.description).then(result => {
       this.refreshFeatureModelList();
     }, error => {
-      console.log("AddFeatureModel: " + error);
-    })
+      console.log('AddFeatureModel: ' + error);
+    });
   }
 
   /**
    * Reset the local database.
    */
   resetDatabase(): void {
-    console.log("Delete Database")
+    console.log('Delete Database');
     this.pouchDBServer.resetDatabase().then(result => {
       this.refreshFeatureModelList();
     }, error => {
-      console.log("Default Constructor (inner): " + error);
-    })
+      console.log('Default Constructor (inner): ' + error);
+    });
   }
 
   /**
@@ -96,7 +97,7 @@ export class FeatureModelComponent {
     this.pouchDBServer.deleteFeatureModel(featureModelId).then(result => {
       this.refreshFeatureModelList();
     }, error => {
-      console.log("DeleteFeatureModel: " + error);
+      console.log('DeleteFeatureModel: ' + error);
     });
   }
 
@@ -106,12 +107,12 @@ export class FeatureModelComponent {
    */
   saveFeatureModel(featureModelId: string): void {
     this.pouchDBServer.getFeatureModel(featureModelId).then(result => {
-      let model = result as any;
-      let saveName = model.name.replace(/\s+/g, '_').toLowerCase() + '.json';
-      let blob = new Blob([JSON.stringify(model, null, 2)], { type: 'text/json;charset=utf-8' });
+      const model = result as any;
+      const saveName = model.name.replace(/\s+/g, '_').toLowerCase() + '.json';
+      const blob = new Blob([JSON.stringify(model, null, 2)], { type: 'text/json;charset=utf-8' });
       saveAs(blob, saveName);
     }, error => {
-      console.log("SaveFeatureModel: " + error);
+      console.log('SaveFeatureModel: ' + error);
     });
   }
 
@@ -122,8 +123,7 @@ export class FeatureModelComponent {
     this.pouchDBServer.getFeatureModelList().then(result => {
       this.featureModelList = result.docs;
     }, error => {
-      console.log("RefreshFeatureModelList: " + error);
-    })
+      console.log('RefreshFeatureModelList: ' + error);
+    });
   }
-
 }
