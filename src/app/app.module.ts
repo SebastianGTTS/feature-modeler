@@ -9,8 +9,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FeatureModelDetailComponent } from './feature-model-detail/feature-model-detail.component';
 import { FeatureTreeComponent } from './feature-tree/feature-tree.component';
 
-import { FeatureBuildingBlockComponent } from './feature-building-block/feature-building-block.component';
-import { CanvasBuildingBlockComponent } from './canvas-building-block/canvas-building-block.component';
 import { ToolExplanationComponent } from './tool-explanation/tool-explanation.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -20,8 +18,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FeatureModelComponent,
     FeatureModelDetailComponent,
     FeatureTreeComponent,
-    FeatureBuildingBlockComponent,
-    CanvasBuildingBlockComponent,
     ToolExplanationComponent,
   ],
   imports: [
