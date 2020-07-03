@@ -14,7 +14,7 @@ import { PouchdbService } from '../service/pouchdb.service';
 /**
  * The FeatureModelComponent shows a starting page where all existing feature models
  * can be discovered and new feature models can be created.
- * @author: Sebastian Gottschalk
+ * @author [Author names removed during blind review]
  */
 export class FeatureModelComponent {
   // List of feature models

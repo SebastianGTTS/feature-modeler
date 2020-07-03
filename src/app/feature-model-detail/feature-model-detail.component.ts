@@ -14,9 +14,11 @@ import { PouchdbService } from '../service/pouchdb.service';
   templateUrl: './feature-model-detail.component.html',
   styleUrls: ['./feature-model-detail.component.css']
 })
+
 /**
  * The FeatureModelDetailComponent shows the feature model and allow the adding/updating/deleting of features and dependencies.
- * @author: Sebastian Gottschalk
+ *
+ * @author [Author names removed during blind review]
  */
 export class FeatureModelDetailComponent implements OnInit {
   // Variables for the feature model representation

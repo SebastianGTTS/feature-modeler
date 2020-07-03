@@ -2,7 +2,7 @@
 
 The Feature Modeler is licensed under the MIT License
 
-Copyright (c) 2020 Sebastian Gottschalk
+Copyright (c) 2020 [Author names removed during blind review]
 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

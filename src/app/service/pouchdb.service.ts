@@ -12,8 +12,7 @@ import { Metadata } from '../models/metadata';
  * The PouchdbService handles the complete interaction of the web application with the PouchDB or CouchDB.
  * The specific database can be set in the constructor of the class
  *
- * @author Sebastian Gottschalk
- * @author Eugen Schmidt
+ * @author [Author names removed during blind review]
  */
 export class PouchdbService {
   db: PouchDB.Database;

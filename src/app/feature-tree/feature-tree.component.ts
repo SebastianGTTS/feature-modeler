@@ -8,7 +8,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 /**
  * Internal class to display single features of the feature tree.
  *
- * @author Sebastian Gottschalk
+ * @author [Author names removed during blind review]
  */
 export class FeatureTreeComponent {
   @Input() features: any[];
