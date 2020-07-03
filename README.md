@@ -10,11 +10,11 @@ This software was intended as a support tool for a Master thesis exploring produ
 
 | Startpage of the Feature Modeler | Creating Feature Model |
 | ------ | ------ |
-| [![alt text](https://github.com/SebastianGTTS/bmdl-feature-modeler/raw/master/images/zero_screen_exp.png "Startpage of the Feature Modeler")](https://github.com/SebastianGTTS/bmdl-feature-modeler/raw/master/images/zero_screen_exp.png) | [![alt text](https://github.com/SebastianGTTS/bmdl-feature-modeler/raw/master/images/first_screen_exp.png "Create Feature Model")](https://github.com/SebastianGTTS/bmdl-feature-modeler/raw/master/images/first_screen_exp.png) |
+| [![alt text](images/startpage.png "Startpage of the Feature Modeler")](images/startpage.png) | [![alt text](images/model-creation.png "Create Feature Model")](images/model-creation.png) |
 
-| Derive Business Models | Check Conformance |
+| Editing a Feature | Editing Feature Metadata |
 | ------ | ------ |
-| [![alt text](https://github.com/SebastianGTTS/bmdl-feature-modeler/raw/master/images/second_screen_exp.png "Derive Business Models")](https://github.com/SebastianGTTS/bmdl-feature-modeler/raw/master/images/second_screen_exp.png) | [![alt text](https://github.com/SebastianGTTS/bmdl-feature-modeler/raw/master/images/third_screen_exp.png "Check Conformance")](https://github.com/SebastianGTTS/bmdl-feature-modeler/raw/master/images/third_screen_exp.png) |
+| [![alt text](images/edit-feature.png "Derive Business Models")](images/edit-feature.png) | [![alt text](images/edit-metadata.png "Check Conformance")](images/edit-metadata.png) |
 
 ## Installation
 
