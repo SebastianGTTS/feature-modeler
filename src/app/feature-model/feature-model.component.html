@@ -1,6 +1,6 @@
 <div class="nav-scroller bg-white shadow-sm">
   <nav class="nav nav-underline">
-    <a class="nav-link active" href="#">Feature Models</a>
+    <a class="nav-link active" href="#" style="pointer-events: none;">Saved feature models:</a>
     <a *ngFor="let fm of featureModelList" class="nav-link" routerLink="/featuremodel/{{fm._id}}">{{fm.name}}</a>
   </nav>
 </div>
@@ -16,22 +16,20 @@
   </div>
 
   <div class="my-3 p-3 bg-white rounded shadow-sm">
-    <h6 class="border-bottom border-gray pb-2 mb-0">Short introduction</h6>
+    <h6 class="border-bottom border-gray pb-2 mb-0">Introduction</h6>
     <div class="text-muted pt-3">
       <p>This tool provides a browser-based interface to create Feature Models and is based on the Angular framework and
         the PouchDB database. It supports the basic set of Feature Model properties such as hierarchical feature trees,
         excluding and requiring dependencies, mandatory and optional features as well as OR and XOR feature selections.
         More advanced Feature Model additions like cardinalities are not currently supported. Feature Models created
-        with this modeler can be exported as a JSON file.</p>
+        with this modeler can be exported as a JSON file by clicking on the &ldquo;Save&rdquo; button in the list of all
+        models.</p>
 
-      <p>This tool was intended as a part of a Master thesis exploring product configuration in Augmented Reality
-        applied to the domain of kitchen furniture. For this reason, the modeler automatically assumes that the models
-        are intended to describe modular kitchens. However, this assumption does not go beyond labeling the root feature
-        a "kitchen" (which can be easily changed in the code) and the tool can be used to describe any product.</p>
-
-      <button type="button" routerLink="/explanation" class="btn btn-dark btn-sm btn-block">
-        View Full Tool Explanation
-      </button>
+      <p>This software was intended as a support tool for a Master thesis exploring product configuration in Augmented
+        Reality applied to the domain of kitchen furniture. For this purpose, the modeler uses the concept of
+        &ldquo;Metadata&rdquo; &mdash; a block of information that describes properties of kitchen parts that are
+        relevant for Augmented Reality. The modeler can attach such a block to any feature that corresponds to an actual
+        physical object which is represented in the modeler by the &ldquo;Is Physical&rdquo; marker.
     </div>
   </div>
 

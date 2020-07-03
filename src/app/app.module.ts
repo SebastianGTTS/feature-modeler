@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { FeatureModelDetailComponent } from './feature-model-detail/feature-model-detail.component';
 import { FeatureModelComponent } from './feature-model/feature-model.component';
 import { FeatureTreeComponent } from './feature-tree/feature-tree.component';
-import { ToolExplanationComponent } from './tool-explanation/tool-explanation.component';
 
 
 @NgModule({
@@ -17,7 +16,6 @@ import { ToolExplanationComponent } from './tool-explanation/tool-explanation.co
     FeatureModelComponent,
     FeatureModelDetailComponent,
     FeatureTreeComponent,
-    ToolExplanationComponent,
   ],
   imports: [
     BrowserModule,
