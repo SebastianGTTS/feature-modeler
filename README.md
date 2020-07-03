@@ -1,4 +1,4 @@
-# Feature Modeler
+# AR Feature Modeler
 This Angular-based tool allows you to create Feature Models for Augmented Reality and export them as JSON.
 
 ## Introduction
